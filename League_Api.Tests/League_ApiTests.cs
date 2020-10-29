@@ -9,6 +9,7 @@ using Amazon.Lambda.TestUtilities;
 using Amazon.Lambda.APIGatewayEvents;
 
 using League_Api;
+using League_Api.Extensions;
 
 namespace League_Api.Tests
 {
@@ -29,6 +30,15 @@ namespace League_Api.Tests
             
             Assert.Equal(200, response.StatusCode);
             Assert.StartsWith("{\"message\":\"hello world\",\"location\":", response.Body);
+        }
+
+        [Fact]
+        public async void TestDBConnection()
+        {
+            DbConnector connector = new DbConnector();
+            bool is_connected = await connector.IsConnected();
+            Assert.True(is_connected);
+            await connector.Disconnect();
         }
     }
 }
