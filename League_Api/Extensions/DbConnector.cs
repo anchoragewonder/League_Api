@@ -18,6 +18,9 @@ namespace League_Api.Extensions
 
         protected static string ConnectionString = $"Server={Endpoint}; database={Database}; UID={Username}; password={Password}";
 
+        // experimetnting with a public strring
+        public static string Conn = $"Server={Endpoint}; database={Database}; UID={Username}; password={Password}";
+
         public MySqlConnection Connection;
 
         public async Task<bool> IsConnected()

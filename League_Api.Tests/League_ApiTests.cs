@@ -10,6 +10,7 @@ using Amazon.Lambda.APIGatewayEvents;
 
 using League_Api;
 using League_Api.Extensions;
+using League_Api.DbSchema;
 
 namespace League_Api.Tests
 {
@@ -41,6 +42,10 @@ namespace League_Api.Tests
             await connector.Disconnect();
         }
 
-
+        [Fact]
+        public void TestDBGet()
+        {
+         
+        }
     }
 }

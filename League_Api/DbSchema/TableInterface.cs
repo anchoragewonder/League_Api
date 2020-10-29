@@ -8,7 +8,7 @@ using Renci.SshNet;
 
 namespace League_Api.DbSchema
 {
-    class TableInterface
+    public class TableInterface
     {
         // formating is going to be wrong but general concept
         public void GetChamp()
@@ -16,7 +16,7 @@ namespace League_Api.DbSchema
             
             try
             {
-                MySqlConnection Connection = new MySqlConnection();//connection_string
+                MySqlConnection Connection = new MySqlConnection(DbConnector.Conn);
                 Connection.Open();
                 MySqlCommand Cmd = Connection.CreateCommand();
                 Cmd.CommandText = "SELECT * FROM leagueOfLegendsChampionData WHERE Name = Aatrox ";
@@ -33,7 +33,7 @@ namespace League_Api.DbSchema
 
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Console.WriteLine("{0} Exception Caught", ex);
             }
            
         }
