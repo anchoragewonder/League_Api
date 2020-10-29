@@ -40,5 +40,7 @@ namespace League_Api.Tests
             Assert.True(is_connected);
             await connector.Disconnect();
         }
+
+
     }
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using MySql.Data.MySqlClient;
 using MySql;
-
+using Renci.SshNet;
 
 namespace League_Api.DbSchema
 {
@@ -13,11 +13,10 @@ namespace League_Api.DbSchema
         // formating is going to be wrong but general concept
         public void GetChamp()
         {
-
+            
             try
             {
-                
-                using var Connection = new MySqlConnection();//(connection_string);
+                MySqlConnection Connection = new MySqlConnection();//connection_string
                 Connection.Open();
                 MySqlCommand Cmd = Connection.CreateCommand();
                 Cmd.CommandText = "SELECT * FROM leagueOfLegendsChampionData WHERE Name = Aatrox ";
