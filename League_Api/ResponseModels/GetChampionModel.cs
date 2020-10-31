@@ -21,8 +21,8 @@ namespace League_Api.ResponseModels
         [JsonProperty(PropertyName = "damageType", Order = 4)]
         public string DamageType { get; set; }
 
-        [JsonProperty(PropertyName = "sturdiness", Order = 5)]
-        public int Defence { get; set; }
+        [JsonProperty(PropertyName = "defense", Order = 5)]
+        public int Sturdiness { get; set; }
 
         [JsonProperty(PropertyName = "mobiility", Order = 6)]
         public int Mobility { get; set; }
@@ -30,11 +30,11 @@ namespace League_Api.ResponseModels
         [JsonProperty(PropertyName = "style", Order = 7)]
         public int Style { get; set; }
 
-        [JsonProperty(PropertyName = "name", Order = 8)]
+        [JsonProperty(PropertyName = "crowdControl", Order = 8)]
         public int CrowdControl { get; set; }
 
         [JsonProperty(PropertyName = "difficulty", Order = 9)]
-        public int CardCost { get; set; }
+        public int Difficulty { get; set; }
 
     }
 }
