@@ -11,6 +11,7 @@ using Amazon.Lambda.APIGatewayEvents;
 using League_Api;
 using League_Api.Extensions;
 using League_Api.DbSchema;
+using League_Api.TableModels;
 
 namespace League_Api.Tests
 {
@@ -43,9 +44,11 @@ namespace League_Api.Tests
         }
 
         [Fact]
-        public void TestDBGet()
+        public async Task TestDBGet()
         {
-         
+            TableInterface table = new TableInterface();
+            ChampModel champ = await table.GetChamp("ziggs");
+            Assert.NotNull(champ);
         }
     }
 }
