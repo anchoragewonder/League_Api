@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace League_Api.ResponseModels
 {
-    class GetChampionModel
+    public class GetChampionModel
     {
 
         [JsonProperty(PropertyName = "name", Order = 1)]
@@ -35,6 +35,21 @@ namespace League_Api.ResponseModels
 
         [JsonProperty(PropertyName = "difficulty", Order = 9)]
         public int Difficulty { get; set; }
+
+        public GetChampionModel() { }
+
+        public GetChampionModel(TableModels.ChampModel model)
+        {
+            this.Name = model.Name;
+            this.Class = model.Class;
+            this.Damage = model.Damage;
+            this.DamageType = model.DamageType;
+            this.Sturdiness = model.Sturdiness;
+            this.Mobility = model.Mobility;
+            this.Style = model.Style;
+            this.CrowdControl = model.CrowdControl;
+            this.Difficulty = model.Difficulty;
+        }
 
     }
 }

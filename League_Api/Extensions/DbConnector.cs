@@ -16,17 +16,12 @@ namespace League_Api.Extensions
         protected static string Endpoint = "rds-mysql-lol.chzcbnejugbt.us-east-1.rds.amazonaws.com";
         protected static string Database = "leagueOfLegendsChampionData";
 
-        protected static string ConnectionString = $"Server={Endpoint}; database={Database}; UID={Username}; password={Password}";
-
-        // experimetnting with a public strring
-        public static string Conn = $"Server={Endpoint}; database={Database}; UID={Username}; password={Password}";
-
         public MySqlConnection Connection;
 
         public async Task<bool> IsConnected()
         {
-            string connection_string = $"Server={Endpoint}; database={Database}; UID={Username}; password={Password}";
-            Connection = new MySqlConnection(connection_string);
+            string connectionString = $"Server={Endpoint}; database={Database}; UID={Username}; password={Password}";
+            Connection = new MySqlConnection(connectionString);
             await Connection.OpenAsync();
             return Connection.State == System.Data.ConnectionState.Open;
         }

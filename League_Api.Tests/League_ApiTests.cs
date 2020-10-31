@@ -12,6 +12,8 @@ using League_Api;
 using League_Api.Extensions;
 using League_Api.DbSchema;
 using League_Api.TableModels;
+using League_Api.Functions;
+using Org.BouncyCastle.Asn1.IsisMtt.X509;
 
 namespace League_Api.Tests
 {
@@ -19,19 +21,6 @@ namespace League_Api.Tests
     {
         public League_ApiTests()
         {
-        }
-
-        [Fact]
-        public void TestFunctionHandlerMethod()
-        {
-            var function = new Function();
-            var request = new APIGatewayProxyRequest();
-            var context = new TestLambdaContext();
-            
-            var response = function.FunctionHandler(request, context);
-            
-            Assert.Equal(200, response.StatusCode);
-            Assert.StartsWith("{\"message\":\"hello world\",\"location\":", response.Body);
         }
 
         [Fact]
@@ -49,6 +38,39 @@ namespace League_Api.Tests
             TableInterface table = new TableInterface();
             ChampModel champ = await table.GetChamp("ziggs");
             Assert.NotNull(champ);
+        }
+
+        [Fact]
+        public async Task TestGetChampFunction()
+        {
+            GetChampionFunction func = new GetChampionFunction();
+            APIGatewayProxyRequest request = new APIGatewayProxyRequest();
+            request.PathParameters = new Dictionary<string, string>();
+            request.PathParameters.Add("name", "ziggs");
+            TestLambdaContext testContext = new TestLambdaContext();
+
+            APIGatewayProxyResponse response = await func.Execute(request, testContext);
+            Assert.NotNull(response.Body);
+            Assert.Equal(200, response.StatusCode);
+
+            request = new APIGatewayProxyRequest();
+            request.PathParameters = new Dictionary<string, string>();
+            request.PathParameters.Add("name", "ziiigggs");
+            response = await func.Execute(request, testContext);
+            Assert.Equal(403, response.StatusCode);
+        }
+
+        [Fact]
+
+        public async Task TestEmptyFunction()
+        {
+            GetChampionFunction func = new GetChampionFunction();
+            APIGatewayProxyRequest request = new APIGatewayProxyRequest();
+            TestLambdaContext testContext = new TestLambdaContext();
+
+            APIGatewayProxyResponse response = await func.Execute(request, testContext);
+            Assert.NotNull(response.Body);
+            Assert.Equal(200, response.StatusCode);            
         }
     }
 }
