@@ -1,9 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <AWSProjectType>Lambda</AWSProjectType>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,6 +12,7 @@
     <PackageReference Include="Amazon.Lambda.Serialization.Json" Version="1.5.0" />
     <PackageReference Include="Amazon.Lambda.APIGatewayEvents" Version="1.2.0" />
     <PackageReference Include="Cake" Version="0.38.5" />
+    <PackageReference Include="MySql.Data" Version="8.0.22" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />   
   </ItemGroup>
   

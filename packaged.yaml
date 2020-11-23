@@ -1,0 +1,62 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Pokemon API
+Parameters:
+  Stage:
+    Description: The environment this application is deployed to (should be dev, staging
+      or prod)
+    Default: dev
+    Type: String
+Globals:
+  Api:
+    Cors:
+      AllowMethods: '''*'''
+      AllowHeaders: '''*'''
+      AllowOrigin: '''*'''
+Resources:
+  GetChampion:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: League_Api::League_Api.Functions.GetChampionFunction::Execute
+      Runtime: dotnetcore2.1
+      CodeUri: s3://anchoragewonder-deploys/9b11087b682baa97f9022e240192d8f8
+      MemorySize: 2048
+      Timeout: 30
+      Role: null
+      Policies:
+      - AWSLambdaBasicExecutionRole
+      Events:
+        PostResource:
+          Type: Api
+          Properties:
+            Path: /champion/{name}
+            Method: GET
+  GetChampionEmpty:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: League_Api::League_Api.Functions.GetChampionFunction::Execute
+      Runtime: dotnetcore2.1
+      CodeUri: s3://anchoragewonder-deploys/9b11087b682baa97f9022e240192d8f8
+      MemorySize: 2048
+      Timeout: 30
+      Role: null
+      Policies:
+      - AWSLambdaBasicExecutionRole
+      Events:
+        PostResource:
+          Type: Api
+          Properties:
+            Path: /champion/
+            Method: GET
+Outputs:
+  ApiURL:
+    Description: API endpoint URL
+    Value:
+      Fn::Join:
+      - ''
+      - - https://
+        - Ref: ServerlessRestApi
+        - .execute-api.
+        - Ref: AWS::Region
+        - .amazonaws.com/
+        - Ref: Stage

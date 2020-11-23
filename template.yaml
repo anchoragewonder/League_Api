@@ -1,43 +1,88 @@
-AWSTemplateFormatVersion: '2010-09-09'
-Transform: AWS::Serverless-2016-10-31
-Description: >
-    League_Api
-    
-    league champ api
+{
+    "AWSTemplateFormatVersion" : "2010-09-09",
+    "Transform" : "AWS::Serverless-2016-10-31",
+    "Description" : "Pokemon API",
 
-# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
-Globals:
-    Function:
-        Runtime: dotnetcore2.1
-        Timeout: 10
+    "Parameters" : {
+        "Stage" : {
+            "Description": "The environment this application is deployed to (should be dev, staging or prod)",
+            "Default": "dev",
+            "Type": "String"
+        }
+    },
 
-Resources:
+    "Globals" : {
+      "Api" : {
+        "Cors" : {
+          "AllowMethods": "'*'",
+          "AllowHeaders": "'*'",
+          "AllowOrigin": "'*'"
+        }
+      }
+    },
 
-    League_ApiFunction:
-        Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-        Properties:
-            CodeUri: ./artifacts/League_Api.zip
-            Handler: League_Api::League_Api.Function::FunctionHandler
-            Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
-                Variables:
-                    PARAM1: VALUE # https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html
-            Events:
-                CatchAll:
-                    Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-                    Properties:
-                        Path: /{proxy+}
-                        Method: any 
+    "Resources" : {
 
-Outputs:
+        "GetChampion" : {
+            "Type" : "AWS::Serverless::Function",
+            "Properties": {
+                "Handler": "League_Api::League_Api.Functions.GetChampionFunction::Execute",
+                "Runtime": "dotnetcore2.1",
+                "CodeUri": "publish/League_Api",
+                "MemorySize": 2048,
+                "Timeout": 30,
+                "Role": null,
+                "Policies": [ "AWSLambdaBasicExecutionRole" ],
+                "Events": {
+                    "PostResource": {
+                        "Type": "Api",
+                        "Properties": {
+                            "Path": "/champion/{name}",
+                            "Method": "GET"
+                        }
+                    }
+                }
+            }
+        },
+        "GetChampionEmpty" : {
+            "Type" : "AWS::Serverless::Function",
+            "Properties": {
+                "Handler": "League_Api::League_Api.Functions.GetChampionFunction::Execute",
+                "Runtime": "dotnetcore2.1",
+                "CodeUri": "publish/League_Api",
+                "MemorySize": 2048,
+                "Timeout": 30,
+                "Role": null,
+                "Policies": [ "AWSLambdaBasicExecutionRole" ],
+                "Events": {
+                    "PostResource": {
+                        "Type": "Api",
+                        "Properties": {
+                            "Path": "/champion/",
+                            "Method": "GET"
+                        }
+                    }
+                }
+            }
+        },
+    },
 
-    League_ApiURL:
-      Description: "API Gateway endpoint URL for Prod environment for League_Api Function"
-      Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/proxy"
-
-    League_ApiFunctionArn:
-      Description: "League_Api Lambda Function ARN"
-      Value: !GetAtt League_ApiFunction.Arn
-
-    League_ApiFunctionIamRole:
-      Description: "Implicit IAM Role created for League_Api function"
-      Value: !GetAtt League_ApiFunctionRole.Arn
+    "Outputs" : {
+        "ApiURL" : {
+            "Description" : "API endpoint URL",
+            "Value" : {
+                "Fn::Join": [
+                    "",
+                    [
+                        "https://",
+                        { "Ref": "ServerlessRestApi"},
+                        ".execute-api.",
+                        { "Ref": "AWS::Region" },
+                        ".amazonaws.com/",
+                        {"Ref": "Stage"}
+                    ]
+                ]
+            }
+        }
+    }
+}      
