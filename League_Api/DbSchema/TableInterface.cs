@@ -49,6 +49,43 @@ namespace League_Api.DbSchema
             }
         }
 
+        public async Task<ChampModel> QuizChamp(int damage, int defense, int mobility, int crowdControl)
+        {
+            DbConnector connection = new DbConnector();
+            if (!(await connection.IsConnected()))
+            {
+                throw new Exception();
+            }
+            try
+            {
+                string commandText = $"SELECT * FROM {TABLE} WHERE Damage=@damage AND Defense=@defense AND Mobility=@mobility AND CrowdControl=@crowdControl;";
+                MySqlCommand cmd = new MySqlCommand(commandText, connection.Connection);
+                cmd.Parameters.AddWithValue("@damage", damage);
+                cmd.Parameters.AddWithValue("@defense", defense);
+                cmd.Parameters.AddWithValue("@mobility", mobility);
+                cmd.Parameters.AddWithValue("@crowdControl", crowdControl);
+                MySqlDataReader reader = cmd.ExecuteReader();
+
+                List<ChampModel> champModels = new List<ChampModel>();
+                while (reader.Read())
+                {
+                    ChampModel champ = MySqlDataReaderToChampModel(reader);
+                    champModels.Add(champ);
+                }
+
+                reader.Close();
+                await connection.Disconnect();
+                return champModels.FirstOrDefault();
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine("{0} Exception Caught", ex);
+                throw ex;
+            }
+        }
+
+
         private ChampModel MySqlDataReaderToChampModel(MySqlDataReader reader)
         {
             int id = Int32.Parse(reader["id"].ToString());
