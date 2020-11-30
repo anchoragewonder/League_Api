@@ -8,6 +8,7 @@ using MySql.Data.MySqlClient;
 
 using League_Api.Extensions;
 using League_Api.TableModels;
+using League_Api.ResponseModels
 
 namespace League_Api.DbSchema
 {
@@ -49,8 +50,14 @@ namespace League_Api.DbSchema
             }
         }
 
-        public async Task<ChampModel> QuizChamp(int damage, int defense, int mobility, int crowdControl)
+        //int damage, int defense, int mobility, int crowdControl variable in quiz champ holdover
+        public async Task<ChampModel> QuizChamp(QuizRequestModel request)
         {
+            int dmg = request.Damage;
+            int def = request.Sturdiness;
+            int mob = request.Mobility;
+            int cc = request.CrowdControl;
+
             DbConnector connection = new DbConnector();
             if (!(await connection.IsConnected()))
             {
@@ -58,12 +65,12 @@ namespace League_Api.DbSchema
             }
             try
             {
-                string commandText = $"SELECT * FROM {TABLE} WHERE Damage=@damage AND Defense=@defense AND Mobility=@mobility AND CrowdControl=@crowdControl;";
+                string commandText = $"SELECT * FROM {TABLE} WHERE Damage=@dmg AND Defense=@def AND Mobility=@mob AND CrowdControl=@cc;";
                 MySqlCommand cmd = new MySqlCommand(commandText, connection.Connection);
-                cmd.Parameters.AddWithValue("@damage", damage);
-                cmd.Parameters.AddWithValue("@defense", defense);
-                cmd.Parameters.AddWithValue("@mobility", mobility);
-                cmd.Parameters.AddWithValue("@crowdControl", crowdControl);
+                cmd.Parameters.AddWithValue("@damage", dmg);
+                cmd.Parameters.AddWithValue("@defense", def);
+                cmd.Parameters.AddWithValue("@mobility", mob);
+                cmd.Parameters.AddWithValue("@crowdControl", cc);
                 MySqlDataReader reader = cmd.ExecuteReader();
 
                 List<ChampModel> champModels = new List<ChampModel>();

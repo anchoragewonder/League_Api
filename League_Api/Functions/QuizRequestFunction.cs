@@ -25,7 +25,7 @@ namespace League_Api.Functions
 
         public async Task<APIGatewayProxyResponse> Execute(APIGatewayProxyRequest apigProxyEvent, ILambdaContext context)
         {
-            QuizRequestModel jsonRequest;
+            QuizRequestModel jsonRequest = new QuizRequestModel();
 
             if (apigProxyEvent.PathParameters == null)
             {

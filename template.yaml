@@ -79,7 +79,28 @@
                     "PostResource": {
                         "Type": "Api",
                         "Properties": {
-                            "Path": "/Quiz",
+                            "Path": "/quizpost/",
+                            "Method": "POST"
+                        }
+                    }
+                }
+            }
+        },
+        "QuizPost" : {
+            "Type" : "AWS::Serverless::Function",
+            "Properties": {
+                "Handler": "League_Api::League_Api.Functions.QuizRequestFunction::Execute",
+                "Runtime": "dotnetcore2.1",
+                "CodeUri": "publish/League_Api",
+                "MemorySize": 2048,
+                "Timeout": 30,
+                "Role": null,
+                "Policies": [ "AWSLambdaBasicExecutionRole" ],
+                "Events": {
+                    "PostResource": {
+                        "Type": "Api",
+                        "Properties": {
+                            "Path": "/quizpost/answers",
                             "Method": "POST"
                         }
                     }
