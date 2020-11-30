@@ -21,10 +21,11 @@ namespace League_Api.Functions
         private const string EXAMPLE_TEXT = "Here is how to use my api. Make a post request using value pairs for attributes" +
             "of League Champions. For example  Defense: 3 , Mobility: 2. The api will then find a champion that best fits those values." +
             "all integers are between 1-9." +
-            "The list of attributes are: Mobility Defense CrowdControl Damage";
+            "The list of attributes are: Mobility Defense CrowdControl Damage. Submit data to /quizpost/answers";
 
         public async Task<APIGatewayProxyResponse> Execute(APIGatewayProxyRequest apigProxyEvent, ILambdaContext context)
         {
+            // how do I make this varible the user data sent through post request? Make it an I interface?
             QuizRequestModel jsonRequest = new QuizRequestModel();
 
             if (apigProxyEvent.PathParameters == null)
@@ -58,7 +59,6 @@ namespace League_Api.Functions
                     Headers = new Dictionary<string, string> { { "Content-Type", "application/json" } }
                 };
             }
-
         }
 
         public async Task<GetChampionModel> GetQuizChamp(QuizRequestModel request)
