@@ -67,10 +67,10 @@ namespace League_Api.DbSchema
             {
                 string commandText = $"SELECT * FROM {TABLE} WHERE Damage=@dmg AND Sturdiness=@def AND Mobility=@mob AND CrowdControl=@cc;";
                 MySqlCommand cmd = new MySqlCommand(commandText, connection.Connection);
-                cmd.Parameters.AddWithValue("@damage", dmg);
-                cmd.Parameters.AddWithValue("@defense", def);
-                cmd.Parameters.AddWithValue("@mobility", mob);
-                cmd.Parameters.AddWithValue("@crowdControl", cc);
+                cmd.Parameters.AddWithValue("@dmg", dmg);
+                cmd.Parameters.AddWithValue("@def", def);
+                cmd.Parameters.AddWithValue("@mob", mob);
+                cmd.Parameters.AddWithValue("@cc", cc);
                 MySqlDataReader reader = cmd.ExecuteReader();
 
                 List<ChampModel> champModels = new List<ChampModel>();
