@@ -8,7 +8,7 @@ using MySql.Data.MySqlClient;
 
 using League_Api.Extensions;
 using League_Api.TableModels;
-using League_Api.ResponseModels
+using League_Api.ResponseModels;
 
 namespace League_Api.DbSchema
 {

@@ -13,6 +13,7 @@ using League_Api.Extensions;
 using League_Api.DbSchema;
 using League_Api.TableModels;
 using League_Api.Functions;
+using League_Api.ResponseModels;
 using Org.BouncyCastle.Asn1.IsisMtt.X509;
 
 namespace League_Api.Tests
@@ -71,6 +72,16 @@ namespace League_Api.Tests
             APIGatewayProxyResponse response = await func.Execute(request, testContext);
             Assert.NotNull(response.Body);
             Assert.Equal(200, response.StatusCode);            
+        }
+
+        [Fact]
+        public async Task TestPost()
+        {
+            TableInterface table = new TableInterface();
+            QuizRequestModel request = new QuizRequestModel(2,3,2,3);
+            ChampModel tableModel = await table.QuizChamp(request);
+            GetChampionModel response = new GetChampionModel(tableModel);
+            Assert.NotNull(response);
         }
     }
 }

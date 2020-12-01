@@ -13,12 +13,11 @@ using League_Api.TableModels;
 using League_Api.ResponseModels;
 using League_Api.DbSchema;
 
-[assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
+
 namespace League_Api.Functions
 {
     public class QuizRequestFunction
     {
-
         public async Task<APIGatewayProxyResponse> Execute(APIGatewayProxyRequest apigProxyEvent, ILambdaContext context)
         {
             
