@@ -65,7 +65,7 @@ namespace League_Api.DbSchema
             }
             try
             {
-                string commandText = $"SELECT * FROM {TABLE} WHERE Damage=@dmg AND Defense=@def AND Mobility=@mob AND CrowdControl=@cc;";
+                string commandText = $"SELECT * FROM {TABLE} WHERE Damage=@dmg AND Sturdiness=@def AND Mobility=@mob AND CrowdControl=@cc;";
                 MySqlCommand cmd = new MySqlCommand(commandText, connection.Connection);
                 cmd.Parameters.AddWithValue("@damage", dmg);
                 cmd.Parameters.AddWithValue("@defense", def);
