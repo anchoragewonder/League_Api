@@ -14,7 +14,7 @@ namespace League_Api.ResponseModels
         [JsonProperty(PropertyName = "defense", Order = 2)]
         public int Sturdiness { get; set; }
 
-        [JsonProperty(PropertyName = "mobiility", Order = 3)]
+        [JsonProperty(PropertyName = "mobility", Order = 3)]
         public int Mobility { get; set; }
 
         [JsonProperty(PropertyName = "crowdControl", Order = 4)]
