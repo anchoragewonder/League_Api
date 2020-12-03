@@ -14,14 +14,19 @@ using League_Api.DbSchema;
 using League_Api.TableModels;
 using League_Api.Functions;
 using League_Api.ResponseModels;
-using Org.BouncyCastle.Asn1.IsisMtt.X509;
+using Newtonsoft.Json;
+using System.Text.RegularExpressions;
+using Xunit.Abstractions;
 
 namespace League_Api.Tests
 {
     public class League_ApiTests
     {
-        public League_ApiTests()
+        private readonly ITestOutputHelper output;
+
+        public League_ApiTests(ITestOutputHelper output)
         {
+            this.output = output;
         }
 
         [Fact]
@@ -77,11 +82,18 @@ namespace League_Api.Tests
         [Fact]
         public async Task TestPost()
         {
-            TableInterface table = new TableInterface();
-            QuizRequestModel request = new QuizRequestModel(2,3,2,3);
-            ChampModel tableModel = await table.QuizChamp(request);
-            GetChampionModel response = new GetChampionModel(tableModel);
+            var function = new QuizRequestFunction();
+            APIGatewayProxyRequest request = new APIGatewayProxyRequest();
+
+            var body = new QuizRequestModel(2, 3, 2, 3);
+            request.Body = JsonConvert.SerializeObject(body);
+
+            var context = new TestLambdaContext();
+            var response = await function.Execute(request, context);
+
+            output.WriteLine(Regex.Unescape(response.Body));
             Assert.NotNull(response);
         }
+        
     }
 }
