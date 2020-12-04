@@ -19,7 +19,7 @@ Resources:
     Properties:
       Handler: League_Api::League_Api.Functions.GetChampionFunction::Execute
       Runtime: dotnetcore2.1
-      CodeUri: s3://anchoragewonder-deploys/9b11087b682baa97f9022e240192d8f8
+      CodeUri: s3://anchoragewonder-deploys/83878f8a84e4b60592a3bfb9f433b8ad
       MemorySize: 2048
       Timeout: 30
       Role: null
@@ -36,7 +36,7 @@ Resources:
     Properties:
       Handler: League_Api::League_Api.Functions.GetChampionFunction::Execute
       Runtime: dotnetcore2.1
-      CodeUri: s3://anchoragewonder-deploys/9b11087b682baa97f9022e240192d8f8
+      CodeUri: s3://anchoragewonder-deploys/83878f8a84e4b60592a3bfb9f433b8ad
       MemorySize: 2048
       Timeout: 30
       Role: null
@@ -48,6 +48,23 @@ Resources:
           Properties:
             Path: /champion/
             Method: GET
+  QuizPost:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: League_Api::League_Api.Functions.QuizRequestFunction::Execute
+      Runtime: dotnetcore2.1
+      CodeUri: s3://anchoragewonder-deploys/83878f8a84e4b60592a3bfb9f433b8ad
+      MemorySize: 2048
+      Timeout: 30
+      Role: null
+      Policies:
+      - AWSLambdaBasicExecutionRole
+      Events:
+        PostResource:
+          Type: Api
+          Properties:
+            Path: /quizpost/
+            Method: POST
 Outputs:
   ApiURL:
     Description: API endpoint URL
