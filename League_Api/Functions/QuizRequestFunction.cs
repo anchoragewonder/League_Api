@@ -33,7 +33,7 @@ namespace League_Api.Functions
                 {
                     Body = JsonConvert.SerializeObject(jsonResponse, Formatting.Indented),
                     StatusCode = 203,
-                    Headers = new Dictionary<string, string> { { "Content-Type", "application/json" }, {"Access-Control-Allow-Origin", "*" }
+                    Headers = new Dictionary<string, string> { { "Content-Type", "application/json" }, { "Access-Control-Allow-Origin", "*" } }
                 };
             }
 
