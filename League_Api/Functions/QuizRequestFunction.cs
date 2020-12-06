@@ -32,7 +32,7 @@ namespace League_Api.Functions
                 return new APIGatewayProxyResponse
                 {
                     Body = JsonConvert.SerializeObject(jsonResponse, Formatting.Indented),
-                    StatusCode = 203,
+                    StatusCode = 200,
                     Headers = new Dictionary<string, string> { { "Content-Type", "application/json" }, { "Access-Control-Allow-Origin", "*" } }
                 };
             }

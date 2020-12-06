@@ -36,7 +36,7 @@ namespace League_Api.Functions
                 {
                     Body = $"{EXAMPLE_TEXT}\n{JsonConvert.SerializeObject(example, Formatting.Indented)}",
                     StatusCode = 200,
-                    Headers = new Dictionary<string, string> { { "Content-Type", "application/json" } }
+                    Headers = new Dictionary<string, string> { { "Content-Type", "application/json" }, { "Access-Control-Allow-Origin", "*" } }
                 };
             }
 
