@@ -5,7 +5,7 @@ Parameters:
   Stage:
     Description: The environment this application is deployed to (should be dev, staging
       or prod)
-    Default: dev
+    Default: prod
     Type: String
 Globals:
   Api:

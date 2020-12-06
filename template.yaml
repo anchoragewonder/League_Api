@@ -59,7 +59,8 @@
                         "Type": "Api",
                         "Properties": {
                             "Path": "/champion/",
-                            "Method": "GET"
+                            "Method": "GET",
+                            "Cors": "True"
                         }
                     }
                 }
@@ -80,7 +81,8 @@
                         "Type": "Api",
                         "Properties": {
                             "Path": "/quizpost/",
-                            "Method": "POST"
+                            "Method": "POST",
+                            "Cors": "True"
                         }
                     }
                 }
