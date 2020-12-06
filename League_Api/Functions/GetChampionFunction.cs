@@ -59,7 +59,7 @@ namespace League_Api.Functions
                 {
                     Body = $"No champion found with the name: {name}",
                     StatusCode = 403,
-                    Headers = new Dictionary<string, string> { { "Content-Type", "application/json" } }
+                    Headers = new Dictionary<string, string> { { "Content-Type", "application/json" }, { "Access-Control-Allow-Origin", "*" } }
                 };
             }
         }
