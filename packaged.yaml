@@ -48,6 +48,7 @@ Resources:
           Properties:
             Path: /champion/
             Method: GET
+            Cors: '*'
   QuizPost:
     Type: AWS::Serverless::Function
     Properties:
@@ -65,6 +66,7 @@ Resources:
           Properties:
             Path: /quizpost/
             Method: POST
+            Cors: '*'
 Outputs:
   ApiURL:
     Description: API endpoint URL
