@@ -8,6 +8,7 @@ using MySql.Data.MySqlClient;
 
 using League_Api.Extensions;
 using League_Api.TableModels;
+using League_Api.ResponseModels;
 
 namespace League_Api.DbSchema
 {
@@ -48,6 +49,49 @@ namespace League_Api.DbSchema
                 throw ex;
             }
         }
+
+        //int damage, int defense, int mobility, int crowdControl variable in quiz champ holdover
+        public async Task<ChampModel> QuizChamp(QuizRequestModel request)
+        {
+            int dmg = request.Damage;
+            int def = request.Sturdiness;
+            int mob = request.Mobility;
+            int cc = request.CrowdControl;
+
+            DbConnector connection = new DbConnector();
+            if (!(await connection.IsConnected()))
+            {
+                throw new Exception();
+            }
+            try
+            {
+                string commandText = $"SELECT * FROM {TABLE} WHERE Damage=@dmg AND Sturdiness=@def AND Mobility=@mob AND CrowdControl=@cc;";
+                MySqlCommand cmd = new MySqlCommand(commandText, connection.Connection);
+                cmd.Parameters.AddWithValue("@dmg", dmg);
+                cmd.Parameters.AddWithValue("@def", def);
+                cmd.Parameters.AddWithValue("@mob", mob);
+                cmd.Parameters.AddWithValue("@cc", cc);
+                MySqlDataReader reader = cmd.ExecuteReader();
+
+                List<ChampModel> champModels = new List<ChampModel>();
+                while (reader.Read())
+                {
+                    ChampModel champ = MySqlDataReaderToChampModel(reader);
+                    champModels.Add(champ);
+                }
+
+                reader.Close();
+                await connection.Disconnect();
+                return champModels.FirstOrDefault();
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine("{0} Exception Caught", ex);
+                throw ex;
+            }
+        }
+
 
         private ChampModel MySqlDataReaderToChampModel(MySqlDataReader reader)
         {

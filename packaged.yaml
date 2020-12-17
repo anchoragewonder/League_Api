@@ -1,11 +1,11 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: Pokemon API
+Description: League API
 Parameters:
   Stage:
     Description: The environment this application is deployed to (should be dev, staging
       or prod)
-    Default: dev
+    Default: prod
     Type: String
 Globals:
   Api:
@@ -19,7 +19,7 @@ Resources:
     Properties:
       Handler: League_Api::League_Api.Functions.GetChampionFunction::Execute
       Runtime: dotnetcore2.1
-      CodeUri: s3://anchoragewonder-deploys/9b11087b682baa97f9022e240192d8f8
+      CodeUri: s3://anchoragewonder-deploys/3e36bb6e32a0061ab8bc9c00f3341762
       MemorySize: 2048
       Timeout: 30
       Role: null
@@ -36,7 +36,7 @@ Resources:
     Properties:
       Handler: League_Api::League_Api.Functions.GetChampionFunction::Execute
       Runtime: dotnetcore2.1
-      CodeUri: s3://anchoragewonder-deploys/9b11087b682baa97f9022e240192d8f8
+      CodeUri: s3://anchoragewonder-deploys/3e36bb6e32a0061ab8bc9c00f3341762
       MemorySize: 2048
       Timeout: 30
       Role: null
@@ -48,6 +48,23 @@ Resources:
           Properties:
             Path: /champion/
             Method: GET
+  QuizPost:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: League_Api::League_Api.Functions.QuizRequestFunction::Execute
+      Runtime: dotnetcore2.1
+      CodeUri: s3://anchoragewonder-deploys/3e36bb6e32a0061ab8bc9c00f3341762
+      MemorySize: 2048
+      Timeout: 30
+      Role: null
+      Policies:
+      - AWSLambdaBasicExecutionRole
+      Events:
+        PostResource:
+          Type: Api
+          Properties:
+            Path: /quizpost/
+            Method: POST
 Outputs:
   ApiURL:
     Description: API endpoint URL

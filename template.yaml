@@ -1,12 +1,12 @@
 {
     "AWSTemplateFormatVersion" : "2010-09-09",
     "Transform" : "AWS::Serverless-2016-10-31",
-    "Description" : "Pokemon API",
+    "Description" : "League API",
 
     "Parameters" : {
         "Stage" : {
             "Description": "The environment this application is deployed to (should be dev, staging or prod)",
-            "Default": "dev",
+            "Default": "prod",
             "Type": "String"
         }
     },
@@ -65,6 +65,27 @@
                 }
             }
         },
+        "QuizPost" : {
+            "Type" : "AWS::Serverless::Function",
+            "Properties": {
+                "Handler": "League_Api::League_Api.Functions.QuizRequestFunction::Execute",
+                "Runtime": "dotnetcore2.1",
+                "CodeUri": "publish/League_Api",
+                "MemorySize": 2048,
+                "Timeout": 30,
+                "Role": null,
+                "Policies": [ "AWSLambdaBasicExecutionRole" ],
+                "Events": {
+                    "PostResource": {
+                        "Type": "Api",
+                        "Properties": {
+                            "Path": "/quizpost/",
+                            "Method": "POST"
+                        }
+                    }
+                }
+            }
+        }
     },
 
     "Outputs" : {

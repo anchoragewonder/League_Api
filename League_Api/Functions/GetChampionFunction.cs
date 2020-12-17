@@ -36,7 +36,7 @@ namespace League_Api.Functions
                 {
                     Body = $"{EXAMPLE_TEXT}\n{JsonConvert.SerializeObject(example, Formatting.Indented)}",
                     StatusCode = 200,
-                    Headers = new Dictionary<string, string> { { "Content-Type", "application/json" } }
+                    Headers = new Dictionary<string, string> { { "Content-Type", "application/json" }, { "Access-Control-Allow-Origin", "*" } }
                 };
             }
 
@@ -50,7 +50,7 @@ namespace League_Api.Functions
                 {
                     Body = JsonConvert.SerializeObject(response, Formatting.Indented),
                     StatusCode = 200,
-                    Headers = new Dictionary<string, string> { { "Content-Type", "application/json" } }
+                    Headers = new Dictionary<string, string> { { "Content-Type", "application/json" }, {"Access-Control-Allow-Origin", "*" } }
                 };
             }
             catch(Exception)
@@ -59,7 +59,7 @@ namespace League_Api.Functions
                 {
                     Body = $"No champion found with the name: {name}",
                     StatusCode = 403,
-                    Headers = new Dictionary<string, string> { { "Content-Type", "application/json" } }
+                    Headers = new Dictionary<string, string> { { "Content-Type", "application/json" }, { "Access-Control-Allow-Origin", "*" } }
                 };
             }
         }
@@ -72,4 +72,5 @@ namespace League_Api.Functions
             return response;
         }
     }
+    
 }
