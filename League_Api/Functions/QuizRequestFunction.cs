@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 using League_Api.TableModels;
 using League_Api.ResponseModels;
 using League_Api.DbSchema;
-
+using League_Api.RequestModels;
 
 namespace League_Api.Functions
 {
@@ -27,7 +27,7 @@ namespace League_Api.Functions
             
             try
             {
-                GetChampionModel jsonResponse = await GetQuizChamp(jsonRequest);
+                QuizChampResponseModel jsonResponse = await GetQuizChamp(jsonRequest);
 
                 return new APIGatewayProxyResponse
                 {
@@ -37,25 +37,23 @@ namespace League_Api.Functions
                 };
             }
 
-            catch (Exception)
+            catch (Exception ex)
             {
                 return new APIGatewayProxyResponse
                 {
-                    Body = $"Not valid quiz inputs please try again",
+                    Body = $"Not valid quiz inputs please try again Error {ex.Message}",
                     StatusCode = 403,
                     Headers = new Dictionary<string, string> { { "Content-Type", "application/json" }, { "Access-Control-Allow-Origin", "*" } }
                 };
             }
         }
 
-        public async Task<GetChampionModel> GetQuizChamp(QuizRequestModel request)
+        public async Task<QuizChampResponseModel> GetQuizChamp(QuizRequestModel request)
         {
             TableInterface table = new TableInterface();
-            ChampModel tableModel = await table.QuizChamp(request);
-            GetChampionModel response = new GetChampionModel(tableModel);
+            List<ChampModel> list = await table.QuizChamp(request);
+            QuizChampResponseModel response = new QuizChampResponseModel(list);
             return response;
         }
-
     }
-
 }
