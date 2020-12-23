@@ -95,8 +95,19 @@ namespace League_Api.DbSchema
             }
         }
 
+        public Dictionary<string, object> SerializeReader(MySqlDataReader reader)
+        {
+            var results = new Dictionary<string, object>();
+            for (var i = 0; i < reader.FieldCount; i++)
+            {
+                results.Add(reader.GetName(i), reader.GetValue(i));
+            }
+            return results;
+        }
+
         private ChampModel MySqlDataReaderToChampModel(MySqlDataReader reader)
         {
+            Dictionary<string, object> dict = SerializeReader(reader);
 
             int id = Int32.Parse(reader["id"].ToString());
             string name = reader["name"].ToString();
@@ -110,10 +121,12 @@ namespace League_Api.DbSchema
             int mobility = Int32.Parse(reader["mobility"].ToString());
             int functionality = Int32.Parse(reader["functionality"].ToString());
 
+            _ = dict.TryGetValue("factors", out object factor_obj);
+
             int? factor = null;
-            if(reader["factors"] != null)
+            if(factor_obj != null)
             {
-                factor = Int32.Parse(reader["factors"].ToString());
+                factor = Int32.Parse(factor_obj.ToString());
             }
 
             return new ChampModel(id, name, _class, style, difficulty, damageType, damage, 
