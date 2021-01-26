@@ -9,6 +9,7 @@ using MySql.Data.MySqlClient;
 using League_Api.Extensions;
 using League_Api.TableModels;
 using League_Api.ResponseModels;
+using League_Api.RequestModels;
 
 namespace League_Api.DbSchema
 {
@@ -51,7 +52,7 @@ namespace League_Api.DbSchema
         }
 
         //int damage, int defense, int mobility, int crowdControl variable in quiz champ holdover
-        public async Task<ChampModel> QuizChamp(QuizRequestModel request)
+        public async Task<List<ChampModel>> QuizChamp(QuizRequestModel request)
         {
             int dmg = request.Damage;
             int def = request.Sturdiness;
@@ -65,7 +66,9 @@ namespace League_Api.DbSchema
             }
             try
             {
-                string commandText = $"SELECT * FROM {TABLE} WHERE Damage=@dmg AND Sturdiness=@def AND Mobility=@mob AND CrowdControl=@cc;";
+                string commandText = $"SELECT * FROM (select *, (CASE WHEN Damage=@dmg then 1 else 0 END) + (CASE WHEN Sturdiness=@def then 1 else 0 END) " +
+                    $"+ (CASE WHEN Mobility=@mob then 1 else 0 END) + (CASE WHEN CrowdControl=@cc then 1 else 0 END) AS factors from {TABLE}) " +
+                    $"aliasname WHERE factors > 2";
                 MySqlCommand cmd = new MySqlCommand(commandText, connection.Connection);
                 cmd.Parameters.AddWithValue("@dmg", dmg);
                 cmd.Parameters.AddWithValue("@def", def);
@@ -82,7 +85,7 @@ namespace League_Api.DbSchema
 
                 reader.Close();
                 await connection.Disconnect();
-                return champModels.FirstOrDefault();
+                return champModels;
             }
 
             catch (Exception ex)
@@ -92,9 +95,20 @@ namespace League_Api.DbSchema
             }
         }
 
+        public Dictionary<string, object> SerializeReader(MySqlDataReader reader)
+        {
+            var results = new Dictionary<string, object>();
+            for (var i = 0; i < reader.FieldCount; i++)
+            {
+                results.Add(reader.GetName(i), reader.GetValue(i));
+            }
+            return results;
+        }
 
         private ChampModel MySqlDataReaderToChampModel(MySqlDataReader reader)
         {
+            Dictionary<string, object> dict = SerializeReader(reader);
+
             int id = Int32.Parse(reader["id"].ToString());
             string name = reader["name"].ToString();
             string _class = reader["class"].ToString();
@@ -107,8 +121,16 @@ namespace League_Api.DbSchema
             int mobility = Int32.Parse(reader["mobility"].ToString());
             int functionality = Int32.Parse(reader["functionality"].ToString());
 
+            _ = dict.TryGetValue("factors", out object factor_obj);
+
+            int? factor = null;
+            if(factor_obj != null)
+            {
+                factor = Int32.Parse(factor_obj.ToString());
+            }
+
             return new ChampModel(id, name, _class, style, difficulty, damageType, damage, 
-                sturdiness, crowdControl, mobility, functionality);
+                sturdiness, crowdControl, mobility, functionality, factor);
         }
     }
 }

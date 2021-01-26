@@ -36,6 +36,9 @@ namespace League_Api.ResponseModels
         [JsonProperty(PropertyName = "difficulty", Order = 9)]
         public int Difficulty { get; set; }
 
+        [JsonProperty(PropertyName = "factor", Order = 10, NullValueHandling = NullValueHandling.Ignore)]
+        public int? Factor { get; set; }
+
         public GetChampionModel() { }
 
         public GetChampionModel(TableModels.ChampModel model)
@@ -49,6 +52,7 @@ namespace League_Api.ResponseModels
             this.Style = model.Style;
             this.CrowdControl = model.CrowdControl;
             this.Difficulty = model.Difficulty;
+            this.Factor = model.Factor;
         }
 
     }

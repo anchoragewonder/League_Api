@@ -7,22 +7,34 @@ namespace League_Api.TableModels
     public class ChampModel
     {
         public int Id { get; set; }
+
         public string Name { get; set; }
+
         public string Class { get; set; }
+
         public int Style { get; set; }
+
         public int Difficulty { get; set; }
+
         public string DamageType { get; set; }
+
         public int Damage { get; set; }
+
         public int Sturdiness { get; set; }
+
         public int CrowdControl { get; set; }
+
         public int Mobility { get; set; }
+
         public int Functionality { get; set; }
+
+        public int? Factor { get; set; }
 
         public ChampModel() { }
 
         public ChampModel(int id, string name, string _class, int style, int difficulty, 
             string damageType, int damage, int sturdiness, int crowdControl, int mobility, 
-            int functionality)
+            int functionality, int? factor)
         {
             this.Id = id;
             this.Name = name;
@@ -35,6 +47,7 @@ namespace League_Api.TableModels
             this.CrowdControl = crowdControl;
             this.Mobility = mobility;
             this.Functionality = functionality;
+            this.Factor = factor;
         }
     }
 }

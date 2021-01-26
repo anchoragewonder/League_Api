@@ -17,6 +17,7 @@ using League_Api.ResponseModels;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using Xunit.Abstractions;
+using League_Api.RequestModels;
 
 namespace League_Api.Tests
 {
@@ -93,7 +94,8 @@ namespace League_Api.Tests
 
             output.WriteLine(Regex.Unescape(response.Body));
             Assert.NotNull(response);
+
+            Assert.Equal(200, response.StatusCode);
         }
-        
     }
 }

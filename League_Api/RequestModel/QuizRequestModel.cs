@@ -4,7 +4,7 @@ using System.Text;
 
 using Newtonsoft.Json;
 
-namespace League_Api.ResponseModels
+namespace League_Api.RequestModels
 {
     public class QuizRequestModel
     {
