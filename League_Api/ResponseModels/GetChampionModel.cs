@@ -39,6 +39,8 @@ namespace League_Api.ResponseModels
         [JsonProperty(PropertyName = "factor", Order = 10, NullValueHandling = NullValueHandling.Ignore)]
         public int? Factor { get; set; }
 
+        [JsonProperty(PropertyName = "altName", Order = 11)]
+        public string AltName { get; set; }
         public GetChampionModel() { }
 
         public GetChampionModel(TableModels.ChampModel model)
@@ -53,6 +55,7 @@ namespace League_Api.ResponseModels
             this.CrowdControl = model.CrowdControl;
             this.Difficulty = model.Difficulty;
             this.Factor = model.Factor;
+            this.AltName = model.AltName;
         }
 
     }

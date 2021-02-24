@@ -120,6 +120,7 @@ namespace League_Api.DbSchema
             int crowdControl = Int32.Parse(reader["crowdControl"].ToString());
             int mobility = Int32.Parse(reader["mobility"].ToString());
             int functionality = Int32.Parse(reader["functionality"].ToString());
+            string altName = reader["altName"].ToString();
 
             _ = dict.TryGetValue("factors", out object factor_obj);
 
@@ -130,7 +131,7 @@ namespace League_Api.DbSchema
             }
 
             return new ChampModel(id, name, _class, style, difficulty, damageType, damage, 
-                sturdiness, crowdControl, mobility, functionality, factor);
+                sturdiness, crowdControl, mobility, functionality, factor, altName);
         }
     }
 }

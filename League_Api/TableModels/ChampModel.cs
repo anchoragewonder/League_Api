@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
+
+
 namespace League_Api.TableModels
 {
     public class ChampModel
@@ -30,11 +32,13 @@ namespace League_Api.TableModels
 
         public int? Factor { get; set; }
 
+        public string AltName { get; set; }
+
         public ChampModel() { }
 
         public ChampModel(int id, string name, string _class, int style, int difficulty, 
             string damageType, int damage, int sturdiness, int crowdControl, int mobility, 
-            int functionality, int? factor)
+            int functionality, int? factor, string altName)
         {
             this.Id = id;
             this.Name = name;
@@ -48,6 +52,8 @@ namespace League_Api.TableModels
             this.Mobility = mobility;
             this.Functionality = functionality;
             this.Factor = factor;
+            this.AltName = altName;
+
         }
     }
 }
