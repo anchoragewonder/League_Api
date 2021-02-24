@@ -19,7 +19,7 @@ Resources:
     Properties:
       Handler: League_Api::League_Api.Functions.GetChampionFunction::Execute
       Runtime: dotnetcore2.1
-      CodeUri: s3://anchoragewonder-deploys/ab5e3daa63f0d03be8998cc8e10cb21e
+      CodeUri: s3://anchoragewonder-deploys/fc1b065085ed8777adecc749fab5b2b1
       MemorySize: 2048
       Timeout: 30
       Role: null
@@ -36,7 +36,7 @@ Resources:
     Properties:
       Handler: League_Api::League_Api.Functions.GetChampionFunction::Execute
       Runtime: dotnetcore2.1
-      CodeUri: s3://anchoragewonder-deploys/ab5e3daa63f0d03be8998cc8e10cb21e
+      CodeUri: s3://anchoragewonder-deploys/fc1b065085ed8777adecc749fab5b2b1
       MemorySize: 2048
       Timeout: 30
       Role: null
@@ -53,7 +53,7 @@ Resources:
     Properties:
       Handler: League_Api::League_Api.Functions.QuizRequestFunction::Execute
       Runtime: dotnetcore2.1
-      CodeUri: s3://anchoragewonder-deploys/ab5e3daa63f0d03be8998cc8e10cb21e
+      CodeUri: s3://anchoragewonder-deploys/fc1b065085ed8777adecc749fab5b2b1
       MemorySize: 2048
       Timeout: 30
       Role: null
