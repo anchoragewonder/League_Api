@@ -10,11 +10,11 @@ namespace League_Api.Extensions
 {
     public class DbConnector
     {
-        protected static string Password = "Blackdog2020$";
-        protected static string Username = "Golohas";
+        protected static string Password = "Blackdog2020";
+        protected static string Username = "admin";
         protected static int Port = 3306;
-        protected static string Endpoint = "rds-mysql-lol.chzcbnejugbt.us-east-1.rds.amazonaws.com";
-        protected static string Database = "leagueOfLegendsChampionData";
+        protected static string Endpoint = "league-db1.chzcbnejugbt.us-east-1.rds.amazonaws.com";
+        protected static string Database = "league_db";
 
         public MySqlConnection Connection;
 
